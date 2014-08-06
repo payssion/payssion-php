@@ -138,21 +138,6 @@ class PayssionClient
     			$params
     	);
     }
-    
-    /**
-     * refund payment
-     *
-     * @param $params refund Params
-     * @return array
-     */
-    public function refund(array $params)
-    {
-    	return $this->call(
-    			'refund',
-    			'post',
-    			$params
-    	);
-    }
 
     /**
      * Method responsible for preparing, setting state and returning answer from rest server
