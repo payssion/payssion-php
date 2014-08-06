@@ -14,14 +14,14 @@ class PayssionClient
     /**
      * @var string
      */
-    protected $merchant_id = null, $app_name = null, $api_key = null;
+    protected $merchant_id = null, $app_name = null, $secret_key = null;
 
     protected static $sig_keys = array(
     		'create' => array(
-    				'merchant_id', 'app_name', 'pm_id', 'amount', 'currency', 'track_id', 'sub_track_id', 'api_key'
+    				'merchant_id', 'app_name', 'pm_id', 'amount', 'currency', 'track_id', 'sub_track_id', 'secret_key'
     		),
     		'query' => array(
-    				'merchant_id', 'app_name', 'trasaction_id', 'track_id', 'sub_track_id', 'api_key'
+    				'merchant_id', 'app_name', 'trasaction_id', 'track_id', 'sub_track_id', 'secret_key'
     		)
     );
     
@@ -65,10 +65,10 @@ class PayssionClient
      * @param string $username Username
      * @param string $password Password
      */
-    public function __construct($merchantId, $apiKey, $appName)
+    public function __construct($merchantId, $appName, $secretKey)
     {
         $this->merchant_id = $merchantId;
-        $this->api_key = $apiKey;
+        $this->secret_key = $secretKey;
         $this->app_name = $appName;
         
         $validate_params = array
@@ -177,7 +177,7 @@ class PayssionClient
         
         $params['merchant_id'] = $this->merchant_id;
         $params['app_name'] = $this->app_name;
-        $params['api_key'] = $this->api_key;
+        $params['secret_key'] = $this->secret_key;
         $params['api_sig'] = $this->getSig($params, self::$sig_keys[$method]);
         
         $response = $this->pushData($method, $request, $params);
@@ -204,6 +204,8 @@ class PayssionClient
     	foreach ($sig_keys as $key) {
     		$msg_array[$key] = isset($params[$key]) ? $params[$key] : '';
     	}
+    	$msg_array['secret_key'] = $this->secret_key;
+    	
     	$msg = implode('|', $msg_array);
     	$sig = md5($msg);
     	return $sig;

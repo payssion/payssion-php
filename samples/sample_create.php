@@ -1,6 +1,6 @@
 <?php
 
-$payssion = new PayssionClient('your merchant id', 'your apikey', 'your appname');
+$payssion = new PayssionClient('your merchant id', 'your appname', 'your secretkey');
 
 $response = null;
 try {
