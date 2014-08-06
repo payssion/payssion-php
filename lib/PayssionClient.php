@@ -21,7 +21,7 @@ class PayssionClient
     				'merchant_id', 'app_name', 'pm_id', 'amount', 'currency', 'track_id', 'sub_track_id', 'secret_key'
     		),
     		'query' => array(
-    				'merchant_id', 'app_name', 'trasaction_id', 'track_id', 'sub_track_id', 'secret_key'
+    				'merchant_id', 'app_name', 'transaction_id', 'track_id', 'sub_track_id', 'secret_key'
     		)
     );
     
