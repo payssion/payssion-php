@@ -9,7 +9,7 @@ class PayssionClient
      * @const string
      */
     protected static $api_url = 'https://www.payssion.com/api/v1/payment/';
-    const VERSION = '1.17.1';
+    const VERSION = '1.2.0.140710';
     
     /**
      * @var string

@@ -2,7 +2,7 @@ payssion-php
 ============
 
 ##Prerequisites
-   * PHP 5.2 or above
+   * PHP 5.3 or above
    * curl, json & openssl extensions must be enabled
    
 ##Usage
