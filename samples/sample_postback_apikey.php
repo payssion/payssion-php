@@ -29,6 +29,6 @@ $check_array = array(
 $check_msg = implode('|', $check_array);
 $check_sig = md5($check_msg);
 $notify_sig = $_POST['notify_sig'];
-if ($notify_sig == $notify_sig) {
+if ($notify_sig == $check_sig) {
 	//handle payment notification
 }

@@ -8,6 +8,7 @@ try {
 			'amount' => 1,
 			'currency' => 'USD',
 			'pm_id' => 'hsbc_br',
+			'description' => 'order description',
 			'track_id' => 'track_id',          //optional, your order id or transaction id
 			'sub_track_id' => 'sub_track_id',  //optional
 			'payer_ref' => '00003456789',
