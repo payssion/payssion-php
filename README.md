@@ -7,14 +7,14 @@ payssion-php
    
 ##Usage
 ``` php
-$payssion = new PayssionClient($merchantId, $apiKey, $app_name);
+$payssion = new PayssionClient($api_key, $secret_key);
 
 $response = null;
 try {
 	$response = $payssion->create(array(
 			'amount' => 1,
 			'currency' => 'USD',
-			'pm_id' => 'hsbc_br',
+			'pm_id' => 'cashu',
 			'track_id' => 'track_id',          //optional, your order id or transaction id
 			'sub_track_id' => 'sub_track_id',  //optional
 			'payer_ref' => '00003456789',
