@@ -9,19 +9,20 @@ class PayssionClient
      * @const string
      */
     protected static $api_url = 'https://www.payssion.com/api/v1/payment/';
-    const VERSION = '1.2.0.140710';
+    const VERSION = '1.2.1.141008';
     
     /**
      * @var string
      */
-    protected $merchant_id = null, $app_name = null, $secret_key = null;
+    protected $api_key = ''; //your api key
+    protected $secret_key = ''; //your secret key
 
     protected static $sig_keys = array(
     		'create' => array(
-    				'merchant_id', 'app_name', 'pm_id', 'amount', 'currency', 'track_id', 'sub_track_id', 'secret_key'
+    				'api_key', 'pm_id', 'amount', 'currency', 'track_id', 'sub_track_id', 'secret_key'
     		),
     		'query' => array(
-    				'merchant_id', 'app_name', 'transaction_id', 'track_id', 'sub_track_id', 'secret_key'
+    				'api_key', 'transaction_id', 'track_id', 'sub_track_id', 'secret_key'
     		)
     );
     
@@ -65,11 +66,10 @@ class PayssionClient
      * @param string $username Username
      * @param string $password Password
      */
-    public function __construct($merchantId, $appName, $secretKey)
+    public function __construct($api_key, $secret_key)
     {
-        $this->merchant_id = $merchantId;
-        $this->secret_key = $secretKey;
-        $this->app_name = $appName;
+        $this->api_key = $api_key;
+        $this->secret_key = $secret_key;
         
         $validate_params = array
         (
@@ -160,8 +160,7 @@ class PayssionClient
 
         $this->checkForErrors($validate_params);
         
-        $params['merchant_id'] = $this->merchant_id;
-        $params['app_name'] = $this->app_name;
+        $params['api_key'] = $this->api_key;
         $params['secret_key'] = $this->secret_key;
         $params['api_sig'] = $this->getSig($params, self::$sig_keys[$method]);
         
