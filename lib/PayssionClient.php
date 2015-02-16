@@ -166,7 +166,6 @@ class PayssionClient
         
         $response = $this->pushData($method, $request, $params);
 
-        Log_Helper::instance()->debug("apitest:$response");
         $response = json_decode($response, true);
 
         if (isset($response['result_code']) && 200 == $response['result_code'])
@@ -245,8 +244,7 @@ class PayssionClient
 
         curl_setopt($ch, CURLOPT_URL, self::$api_url. $method);
         curl_setopt($ch, CURLOPT_POST, true);
-        
-        Log_Helper::instance()->debug("var:" . print_r($vars, true));
+       
         if (is_array($vars)) $vars = http_build_query($vars, '', '&');
         curl_setopt($ch, CURLOPT_POSTFIELDS, $vars);
         
