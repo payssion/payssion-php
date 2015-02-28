@@ -9,7 +9,7 @@ class PayssionClient
      * @const string
      */
     protected static $api_url = 'https://www.payssion.com/api/v1/payment/';
-    const VERSION = '1.2.1.141008';
+    const VERSION = '1.2.1.150228';
     
     /**
      * @var string
@@ -22,6 +22,9 @@ class PayssionClient
     				'api_key', 'pm_id', 'amount', 'currency', 'track_id', 'sub_track_id', 'secret_key'
     		),
     		'query' => array(
+    				'api_key', 'transaction_id', 'track_id', 'sub_track_id', 'secret_key'
+    		),
+    		'getDetail' => array(
     				'api_key', 'transaction_id', 'track_id', 'sub_track_id', 'secret_key'
     		)
     );
@@ -134,6 +137,22 @@ class PayssionClient
     {
     	return $this->call(
     			'query',
+    			'post',
+    			$params
+    	);
+    }
+    
+    
+    /**
+     * get payment detail
+     *
+     * @param $params query Params
+     * @return array
+     */
+    public function getDetail(array $params)
+    {
+    	return $this->call(
+    			'getDetail',
     			'post',
     			$params
     	);
