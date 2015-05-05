@@ -16,7 +16,7 @@ try {
 			'payer_email' => 'user@mail.com',
 			'notify_url' => 'your notify url', //optional, the notify url on your server side
 			'success_url' => 'your notify url',//optional,  the redirect url after success payments
-			'fail_url' => 'your fail url'      //optional, the redirect url after failed payments
+			'redirect_url' => 'your redirect url'      //optional, the redirect url after pending or failed payments
 	));
 } catch (Exception $e) {
 	//handle exception
@@ -42,7 +42,7 @@ if ($payssion->isSuccess()) {
 			$bankaccount = $response['bankaccount'];
 			echo print_r($bankaccount, true);
 	    } else if (in_array("redirect", $todo_list)) {
-		    //send payment url by email
+		    //redirect the users to the redirect url or send the url by email
 		    $paylink = $response['redirect_url'];
 		    echo $paylink;
 	    }

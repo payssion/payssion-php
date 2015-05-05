@@ -21,8 +21,8 @@ try {
 			'payer_name' => 'user name',
 			'payer_email' => 'user@mail.com',
 			'notify_url' => 'your notify url', //optional, the notify url on your server side
-			'success_url' => 'your notify url',//optional,  the redirect url after success payments
-			'fail_url' => 'your fail url'      //optional, the redirect url after failed payments
+			'success_url' => 'your success url',//optional,  the redirect url after successful payments
+			'redirect_url' => 'your redirect url'      //optional, the redirect url after pending or failed payments
 	));
 } catch (Exception $e) {
 	//handle exception
