@@ -284,7 +284,7 @@ class PayssionClient
         $code = curl_errno($ch);
         if (0 < $code)
         {
-            throw new Exception('Unable to connect to ' . self::$api_url . ' Error: ' . curl_error($ch), $code);
+            throw new Exception('Unable to connect to ' . self::$api_url . ' Error: ' . "$code :". curl_error($ch), $code);
         }
 
         curl_close($ch);
