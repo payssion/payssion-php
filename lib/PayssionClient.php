@@ -271,6 +271,9 @@ class PayssionClient
         curl_setopt($ch, CURLOPT_HTTPHEADER, $this->getHeaders());
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $this->ssl_verify);
+        if ($this->ssl_verify) {
+        	curl_setopt($ch, CURLOPT_CAINFO, dirname(__FILE__) . '/cacert.pem');
+        }
         
         $response = curl_exec($ch);
 
