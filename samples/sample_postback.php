@@ -30,4 +30,25 @@ $check_sig = md5($check_msg);
 $notify_sig = $_POST['notify_sig'];
 if ($notify_sig == $check_sig) {
 	//handle payment notification
+	switch ($state) {
+		case 'completed':
+			//$track_id should be your order id
+			//update the order as paid
+			break;
+		case 'paid_partial':
+			//this is rare case if it goes here
+			break;
+		case 'pending':
+			break;
+		case 'failed':	
+			break;
+		case 'expired':		
+			break;
+		case 'error':
+			break;
+		default:
+			//please refer to the following URL for more states:
+			//https://payssion.com/en/docs/#api-reference-payment-notifications
+			break;
+	}
 }
