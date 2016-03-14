@@ -17,7 +17,6 @@ try {
 			'pm_id' => 'cashu',
 			'track_id' => 'track_id',          //optional, your order id or transaction id
 			'sub_track_id' => 'sub_track_id',  //optional
-			'payer_ref' => '00003456789',
 			'payer_name' => 'user name',
 			'payer_email' => 'user@mail.com',
 			'notify_url' => 'your notify url', //optional, the notify url on your server side
