@@ -66,8 +66,8 @@ class PayssionClient
     /**
      * Constructor
      * 
-     * @param string $username Username
-     * @param string $password Password
+     * @param string $api_key Payssion App api_key
+     * @param string $secret_key Payssion App secret_key
      */
     public function __construct($api_key, $secret_key)
     {
@@ -77,7 +77,9 @@ class PayssionClient
         $validate_params = array
         (
             false === extension_loaded('curl') => 'The curl extension must be loaded for using this class!',
-            false === extension_loaded('json') => 'The json extension must be loaded for using this class!'
+            false === extension_loaded('json') => 'The json extension must be loaded for using this class!',
+        	empty($this->api_key) => 'api_key is not set!',
+        	empty($this->secret_key) => 'secret_key is not set!',
         );
         $this->checkForErrors($validate_params);
     }
