@@ -1,6 +1,8 @@
 <?php
 
 $payssion = new PayssionClient('your api key', 'your secretkey');
+//please uncomment the following if you use sandbox api_key
+//$payssion = new PayssionClient('your api key', 'your secretkey', false);
 
 $response = null;
 try {
@@ -9,12 +11,8 @@ try {
 			'currency' => 'USD',
 			'pm_id' => 'hsbc_br',
 			'description' => 'order description',
-			'track_id' => 'track_id',          //optional, your order id or transaction id
-			'sub_track_id' => 'sub_track_id',  //optional
-			'payer_ref' => '00003456789',
-			'payer_name' => 'user name',
-			'payer_email' => 'user@mail.com',
-			'redirect_url' => 'your redirect url'      //optional, the redirect url after payments (for both of paid and non-paid)
+			'order_id' => 'your order id',          //your order id
+			'return_url' => 'your return url'   //optional, the return url after payments (for both of paid and non-paid)
 	));
 } catch (Exception $e) {
 	//handle exception

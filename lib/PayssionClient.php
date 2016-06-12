@@ -8,18 +8,18 @@ class PayssionClient
     /**
      * @const string
      */
-    protected static $api_url = 'https://www.payssion.com/api/v1/payment/';
-    const VERSION = '1.2.1.150228';
+    const VERSION = '1.3.0.160612';
     
     /**
      * @var string
      */
+    protected $api_url;
     protected $api_key = ''; //your api key
     protected $secret_key = ''; //your secret key
 
     protected static $sig_keys = array(
     		'create' => array(
-    				'api_key', 'pm_id', 'amount', 'currency', 'track_id', 'sub_track_id', 'secret_key'
+    				'api_key', 'pm_id', 'amount', 'currency', 'order_id', 'secret_key'
     		),
     		'query' => array(
     				'api_key', 'transaction_id', 'track_id', 'sub_track_id', 'secret_key'
@@ -68,8 +68,9 @@ class PayssionClient
      * 
      * @param string $api_key Payssion App api_key
      * @param string $secret_key Payssion App secret_key
+     * @param bool $is_livemode false if you use sandbox api_key and true for live mode
      */
-    public function __construct($api_key, $secret_key)
+    public function __construct($api_key, $secret_key, $is_livemode = true)
     {
         $this->api_key = $api_key;
         $this->secret_key = $secret_key;
@@ -82,6 +83,22 @@ class PayssionClient
         	empty($this->secret_key) => 'secret_key is not set!',
         );
         $this->checkForErrors($validate_params);
+        
+        $this->setLiveMode($is_livemode);
+    }
+
+    /**
+     * Set LiveMode
+     *
+     * @param bool $is_livemode
+     */
+    public function setLiveMode($is_livemode)
+    {
+    	if ($is_livemode) {
+    		$this->api_url = 'https://www.payssion.com/api/v1/payment/';
+    	} else {
+    		$this->api_url = 'http://sandbox.payssion.com/api/v1/payment/';
+    	}
     }
 
     /**
@@ -91,7 +108,7 @@ class PayssionClient
      */
     public function setUrl($url)
     {
-        self::$api_url = $url;
+        $this->api_url = $url;
     }
     
     /**
@@ -263,7 +280,7 @@ class PayssionClient
     {
         $ch = curl_init();
 
-        curl_setopt($ch, CURLOPT_URL, self::$api_url. $method);
+        curl_setopt($ch, CURLOPT_URL, $this->api_url. $method);
         curl_setopt($ch, CURLOPT_POST, true);
        
         if (is_array($vars)) $vars = http_build_query($vars, '', '&');
@@ -289,7 +306,7 @@ class PayssionClient
         $code = curl_errno($ch);
         if (0 < $code)
         {
-            throw new Exception('Unable to connect to ' . self::$api_url . ' Error: ' . "$code :". curl_error($ch), $code);
+            throw new Exception('Unable to connect to ' . $this->api_url . ' Error: ' . "$code :". curl_error($ch), $code);
         }
 
         curl_close($ch);

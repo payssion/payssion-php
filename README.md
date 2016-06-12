@@ -7,7 +7,9 @@ payssion-php
    
 ##Usage
 ``` php
-$payssion = new PayssionClient($api_key, $secret_key);
+$payssion = new PayssionClient('your api key', 'your secretkey');
+//please uncomment the following if you use sandbox api_key
+//$payssion = new PayssionClient('your api key', 'your secretkey', false);
 
 $response = null;
 try {
@@ -15,13 +17,8 @@ try {
 			'amount' => 1,
 			'currency' => 'USD',
 			'pm_id' => 'cashu',
-			'track_id' => 'track_id',          //optional, your order id or transaction id
-			'sub_track_id' => 'sub_track_id',  //optional
-			'payer_name' => 'user name',
-			'payer_email' => 'user@mail.com',
-			'notify_url' => 'your notify url', //optional, the notify url on your server side
-			'success_url' => 'your success url',//optional,  the redirect url after successful payments
-			'redirect_url' => 'your redirect url'      //optional, the redirect url after pending or failed payments
+			'order_id' => 'your order id',      //your order id
+			'return_url' => 'your return url'   //optional, the return url after payments (for both of paid and non-paid)
 	));
 } catch (Exception $e) {
 	//handle exception
