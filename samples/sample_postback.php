@@ -10,8 +10,7 @@ $secret_key = ''; //your secret key
 $pm_id = $_POST['pm_id'];
 $amount = $_POST['amount'];
 $currency = $_POST['currency'];
-$track_id = $_POST['track_id'];
-$sub_track_id = $_POST['sub_track_id'];
+$order_id = $_POST['order_id'];
 $state = $_POST['state'];
 
 $check_array = array(
@@ -19,8 +18,7 @@ $check_array = array(
 		$pm_id,
 		$amount,
 		$currency,
-		$track_id,
-		$sub_track_id,
+		$order_id,
 		$state,
 		$secret_key
 );
@@ -32,7 +30,7 @@ if ($notify_sig == $check_sig) {
 	//handle payment notification
 	switch ($state) {
 		case 'completed':
-			//$track_id should be your order id
+			//$order_id should be your order id
 			//update the order as paid
 			break;
 		case 'paid_partial':
