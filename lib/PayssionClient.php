@@ -21,11 +21,8 @@ class PayssionClient
     		'create' => array(
     				'api_key', 'pm_id', 'amount', 'currency', 'order_id', 'secret_key'
     		),
-    		'query' => array(
-    				'api_key', 'transaction_id', 'track_id', 'sub_track_id', 'secret_key'
-    		),
     		'getDetail' => array(
-    				'api_key', 'transaction_id', 'track_id', 'sub_track_id', 'secret_key'
+    				'api_key', 'transaction_id', 'order_id', 'secret_key'
     		)
     );
     
@@ -145,22 +142,6 @@ class PayssionClient
              $params
         );
     }
-      
-    /**
-     * query payment transaction
-     *
-     * @param $params query Params
-     * @return array
-     */
-    public function query(array $params)
-    {
-    	return $this->call(
-    			'query',
-    			'post',
-    			$params
-    	);
-    }
-    
     
     /**
      * get payment detail
