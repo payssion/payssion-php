@@ -24,20 +24,7 @@ if ($payssion->isSuccess()) {
 	$todo = $response['todo'];
 	if ($todo) {
 		$todo_list = explode('|', $todo);
-		if (in_array("instruct", $todo_list)) {
-			//show offline bank account info by showorder param
-			// 			"bankaccount":
-			// 			{
-			// 				"Banco":"Caixa Econ\u00f3mica Federal",
-			// 				"Benefici\u00e1rio":"DICLOMERC SERVI\u00c7OS T\u00c9CNICOS EIRELI- ME",
-			// 				"Ag\u00eancia":"1525 op 3",
-			// 				"Conta":"2640-0",
-			// 				"Referencia":"12345",
-			// 				"show_order":"Banco|Benefici\u00e1rio|Ag\u00eancia|Conta|Referencia"
-			// 			}
-			$bankaccount = $response['bankaccount'];
-			echo print_r($bankaccount, true);
-	    } else if (in_array("redirect", $todo_list)) {
+		if (in_array("redirect", $todo_list)) {
 		    //redirect the users to the redirect url or send the url by email
 		    $paylink = $response['redirect_url'];
 		    echo $paylink;

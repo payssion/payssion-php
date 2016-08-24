@@ -21,7 +21,7 @@ class PayssionClient
     		'create' => array(
     				'api_key', 'pm_id', 'amount', 'currency', 'order_id', 'secret_key'
     		),
-    		'getDetail' => array(
+    		'details' => array(
     				'api_key', 'transaction_id', 'order_id', 'secret_key'
     		)
     );
@@ -144,15 +144,15 @@ class PayssionClient
     }
     
     /**
-     * get payment detail
+     * get payment details
      *
      * @param $params query Params
      * @return array
      */
-    public function getDetail(array $params)
+    public function getDetails(array $params)
     {
     	return $this->call(
-    			'getDetail',
+    			'details',
     			'post',
     			$params
     	);
