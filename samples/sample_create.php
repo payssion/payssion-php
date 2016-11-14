@@ -1,4 +1,5 @@
 <?php
+require_once("../lib/PayssionClient.php");
 
 $payssion = new PayssionClient('your api key', 'your secretkey');
 //please uncomment the following if you use sandbox api_key
