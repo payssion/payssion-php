@@ -28,6 +28,7 @@ $check_sig = md5($check_msg);
 $notify_sig = $_POST['notify_sig'];
 if ($notify_sig == $check_sig) {
 	//handle payment notification
+	//you must make sure the amount is equal to the order amount you created
 	switch ($state) {
 		case 'completed':
 			//$order_id should be your order id

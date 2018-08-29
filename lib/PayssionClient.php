@@ -180,7 +180,6 @@ class PayssionClient
         $this->checkForErrors($validate_params);
         
         $params['api_key'] = $this->api_key;
-        $params['secret_key'] = $this->secret_key;
         $params['api_sig'] = $this->getSig($params, self::$sig_keys[$method]);
         
         $response = $this->pushData($method, $request, $params);
