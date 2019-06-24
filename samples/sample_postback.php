@@ -6,6 +6,17 @@ header('HTTP/1.1 200 OK');
 $api_key  = ''; //your api key
 $secret_key = ''; //your secret key
 
+//only when you request payments in json
+if (isset($_SERVER['CONTENT_TYPE']) && false !== strpos($_SERVER['CONTENT_TYPE'], 'json')) {
+	$body = file_get_contents("php://input");
+	$body_params = json_decode($body, true);
+	if($body_params) {
+		foreach($body_params as $param_name => $param_value) {
+			$_POST[$param_name] = $param_value;
+		}
+	}
+}
+
 // Assign payment notification values to local variables
 $pm_id = $_POST['pm_id'];
 $amount = $_POST['amount'];
