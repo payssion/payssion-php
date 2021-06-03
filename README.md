@@ -2,7 +2,7 @@ payssion-php
 ============
 
 ##Prerequisites
-   * PHP 5.3 or above
+   * PHP 7.0 or above
    * curl, json & openssl extensions must be enabled
    
 ##Usage
@@ -13,22 +13,20 @@ $payssion = new PayssionClient('your api key', 'your secretkey');
 
 $response = null;
 try {
-	$response = $payssion->create(array(
-			'amount' => 1,
-			'currency' => 'USD',
-			'pm_id' => 'alipay_cn',
-			'order_id' => 'your order id',      //your order id
-			'return_url' => 'your return url'   //optional, the return url after payments (for both of paid and non-paid)
-	));
+    $response = $payssion->getDetails(
+        [
+            'order_id' => 'your order id',  //your order id
+        ]
+    );
 } catch (Exception $e) {
-	//handle exception
-	echo "Exception: " . $e->getMessage();
+    //handle exception
+    echo "Exception: " . $e->getMessage();
 }
 
 if ($payssion->isSuccess()) {
-	//handle success
+    //handle success
 } else {
-	//handle failed
+    //handle failed
 }
 
 ```

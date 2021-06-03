@@ -4,3 +4,8 @@
 .project
 
 .settings/org.eclipse.php.core.prefs
+
+.idea
+
+vendor
+composer.lock
