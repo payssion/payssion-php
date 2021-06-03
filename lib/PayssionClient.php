@@ -67,7 +67,7 @@ class PayssionClient
     ];
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $ssl_verify = true;
 
@@ -77,8 +77,9 @@ class PayssionClient
      * @param string $api_key Payssion App api_key
      * @param string $secret_key Payssion App secret_key
      * @param bool $is_livemode false if you use sandbox api_key and true for live mode
+     * @throws Exception
      */
-    public function __construct($api_key, $secret_key, $is_livemode = true)
+    public function __construct(string $api_key, string $secret_key, bool $is_livemode = true)
     {
         $this->api_key = $api_key;
         $this->secret_key = $secret_key;
@@ -99,7 +100,7 @@ class PayssionClient
      *
      * @param bool $is_livemode
      */
-    public function setLiveMode($is_livemode)
+    public function setLiveMode(bool $is_livemode)
     {
         if ($is_livemode) {
             $this->api_url = 'https://www.payssion.com/api/v1/payment/';
@@ -113,7 +114,7 @@ class PayssionClient
      *
      * @param string $url Api URL
      */
-    public function setUrl($url)
+    public function setUrl(string $url)
     {
         $this->api_url = $url;
     }
@@ -123,7 +124,7 @@ class PayssionClient
      *
      * @param bool $ssl_verify SSL verify
      */
-    public function setSSLverify($ssl_verify)
+    public function setSSLverify(bool $ssl_verify)
     {
         $this->ssl_verify = $ssl_verify;
     }
@@ -133,7 +134,7 @@ class PayssionClient
      *
      * @return bool
      */
-    public function isSuccess()
+    public function isSuccess(): bool
     {
         return $this->is_success;
     }
@@ -143,8 +144,9 @@ class PayssionClient
      *
      * @param $params array create Params
      * @return array
+     * @throws Exception
      */
-    public function create(array $params)
+    public function create(array $params): array
     {
         return $this->call(
             'create',
@@ -158,8 +160,9 @@ class PayssionClient
      *
      * @param $params array query Params
      * @return array
+     * @throws Exception
      */
-    public function getDetails(array $params)
+    public function getDetails(array $params): array
     {
         return $this->call(
             'details',
@@ -175,8 +178,9 @@ class PayssionClient
      * @param string $request
      * @param array $params
      * @return array
+     * @throws Exception
      */
-    protected function call($method, $request, $params)
+    protected function call(string $method, string $request, array $params): array
     {
         $this->is_success = false;
 
@@ -195,7 +199,7 @@ class PayssionClient
 
         $response = json_decode($response, true);
 
-        if (isset($response['result_code']) && 200 == $response['result_code']) {
+        if (isset($response['result_code']) && 200 === (int)$response['result_code']) {
             $this->is_success = true;
         }
 
@@ -205,14 +209,15 @@ class PayssionClient
     /**
      * Checking error mechanism
      *
-     * @param array $validateArray
-     * @throws Exception
+     * @param array $params
+     * @param array $sig_keys
+     * @return string
      */
-    protected function getSig(array &$params, array $sig_keys)
+    protected function getSig(array &$params, array $sig_keys): string
     {
         $msg_array = [];
         foreach ($sig_keys as $key) {
-            $msg_array[$key] = isset($params[$key]) ? $params[$key] : '';
+            $msg_array[$key] = $params[$key] ?? '';
         }
         $msg_array['secret_key'] = $this->secret_key;
 
@@ -224,7 +229,7 @@ class PayssionClient
     /**
      * Checking error mechanism
      *
-     * @param array $validateArray
+     * @param $validate_params
      * @throws Exception
      */
     protected function checkForErrors(&$validate_params)
@@ -242,11 +247,11 @@ class PayssionClient
      * @param string $method_type
      * @return bool
      */
-    protected function checkRequestMethod($method_type)
+    protected function checkRequestMethod(string $method_type): bool
     {
         $request_method = strtolower($method_type);
 
-        if (in_array($request_method, $this->allowed_request_methods)) {
+        if (in_array($request_method, $this->allowed_request_methods, true)) {
             return true;
         }
 
@@ -262,8 +267,8 @@ class PayssionClient
      * @return string
      * @throws Exception
      */
-    protected function pushData($method, $method_type, $vars)
-    {
+    protected function pushData(string $method, string $method_type, $vars): string
+    {echo $method_type;
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, $this->api_url . $method);
@@ -300,9 +305,9 @@ class PayssionClient
         return $response ?: '';
     }
 
-    protected function &getHeaders()
+    protected function &getHeaders(): array
     {
-        $langVersion = phpversion();
+        $langVersion = PHP_VERSION;
         $uname = php_uname();
         $ua = [
             'version' => self::VERSION,
