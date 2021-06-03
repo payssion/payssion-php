@@ -1,0 +1,18 @@
+{
+    "name": "axl1232/payssion-php",
+    "description": "description",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "axl"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "ext-json": "*",
+        "ext-curl": "*"
+    },
+    "psr-4": {
+        "Payssion\\": "lib/"
+    }
+}
