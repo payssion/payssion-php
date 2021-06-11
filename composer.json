@@ -12,7 +12,9 @@
         "ext-json": "*",
         "ext-curl": "*"
     },
-    "psr-4": {
-        "Payssion\\": "lib/"
+    "autoload": {
+        "psr-4": {
+            "Payssion\\": "lib/"
+        }
     }
 }
