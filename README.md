@@ -26,9 +26,10 @@ try {
 }
 
 if ($payssion->isSuccess()) {
-	//handle success
+    //redirect the users to the payment URL
+    $payment_url = $response['redirect_url'];
 } else {
-	//handle failed
+	//handle failure
 }
 
 ```

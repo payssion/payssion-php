@@ -21,18 +21,8 @@ try {
 }
 
 if ($payssion->isSuccess()) {
-	//handle success
-	$todo = $response['todo'];
-	if ($todo) {
-		$todo_list = explode('|', $todo);
-		if (in_array("redirect", $todo_list)) {
-		    //redirect the users to the redirect url or send the url by email
-		    $paylink = $response['redirect_url'];
-		    echo $paylink;
-	    }
-	} else {
-	//just in case, should not be here
-	}
+    //redirect the users to the payment URL
+    $payment_url = $response['redirect_url'];
 } else {
-	//handle failed
+	//handle failure
 }
