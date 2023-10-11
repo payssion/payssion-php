@@ -8,7 +8,7 @@ class PayssionClient
     /**
      * @const string
      */
-    const VERSION = '1.3.0.160612';
+    const VERSION = '1.3.1';
     
     /**
      * @var string
@@ -18,12 +18,15 @@ class PayssionClient
     protected $secret_key = ''; //your secret key
 
     protected static $sig_keys = array(
-    		'create' => array(
-    				'api_key', 'pm_id', 'amount', 'currency', 'order_id', 'secret_key'
-    		),
-    		'details' => array(
-    				'api_key', 'transaction_id', 'order_id', 'secret_key'
-    		)
+        'create' => array(
+            'api_key', 'pm_id', 'amount', 'currency', 'order_id', 'secret_key'
+        ),
+        'details' => array(
+            'api_key', 'transaction_id', 'order_id', 'secret_key'
+        ),
+        'refund' => array(
+            'api_key', 'transaction_id', 'amount', 'currency', 'secret_key'
+        ),
     );
     
     /**
@@ -92,9 +95,9 @@ class PayssionClient
     public function setLiveMode($is_livemode)
     {
     	if ($is_livemode) {
-    		$this->api_url = 'https://www.payssion.com/api/v1/payment/';
+    		$this->api_url = 'https://www.payssion.com/api/v1/';
     	} else {
-    		$this->api_url = 'http://sandbox.payssion.com/api/v1/payment/';
+    		$this->api_url = 'http://sandbox.payssion.com/api/v1/';
     	}
     }
 
@@ -139,7 +142,8 @@ class PayssionClient
         return $this->call(
             'create',
             'post',
-             $params
+             $params,
+            'payment/create'
         );
     }
     
@@ -151,11 +155,28 @@ class PayssionClient
      */
     public function getDetails(array $params)
     {
-    	return $this->call(
-    			'details',
-    			'post',
-    			$params
-    	);
+        return $this->call(
+            'details',
+            'post',
+            $params,
+            'payment/details'
+            );
+    }
+    
+    /**
+     * refund
+     *
+     * @param $params query Params
+     * @return array
+     */
+    public function refund(array $params)
+    {
+        return $this->call(
+            'refund',
+            'post',
+            $params,
+            'refunds'
+            );
     }
 
     /**
@@ -166,7 +187,7 @@ class PayssionClient
      * @param array $params
      * @return array
      */
-    protected function call($method, $request, $params)
+    protected function call($method, $request, $params, $url_suffix)
     {
         $this->is_success = false;
         
@@ -182,7 +203,7 @@ class PayssionClient
         $params['api_key'] = $this->api_key;
         $params['api_sig'] = $this->getSig($params, self::$sig_keys[$method]);
         
-        $response = $this->pushData($method, $request, $params);
+        $response = $this->pushData($url_suffix, $request, $params);
 
         $response = json_decode($response, true);
 
@@ -250,17 +271,17 @@ class PayssionClient
     /**
      * Method responsible for pushing data to server
      *
-     * @param string $method
+     * @param string $url_suffix
      * @param string $method_type
      * @param array|string $vars
      * @return array
      * @throws Exception
      */
-    protected function pushData($method, $method_type, $vars)
+    protected function pushData($url_suffix, $method_type, $vars)
     {
         $ch = curl_init();
 
-        curl_setopt($ch, CURLOPT_URL, $this->api_url. $method);
+        curl_setopt($ch, CURLOPT_URL, $this->api_url . $url_suffix);
         curl_setopt($ch, CURLOPT_POST, true);
        
         if (is_array($vars)) $vars = http_build_query($vars, '', '&');
